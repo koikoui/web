@@ -99,7 +99,7 @@ plt.title()                     #设置标题
 plt.show()                      #显示创建的绘图对象
 ```
 任务三：<br/>
-&emsp;&emsp;绘制 $y = 2 \times sinx + cosx$ 的曲线，横坐标范围为[$-3 \times \pi$ , $3 \times \pi$]，曲线为红色。实现代码如下：<br/>
+&emsp;&emsp;绘制 $$y = 2 \times sinx + cosx$$ 的曲线，横坐标范围为[$-3 \times \pi$ , $3 \times \pi$]，曲线为红色。实现代码如下：<br/>
 
 ```
 import numpy as np
