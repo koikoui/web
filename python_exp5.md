@@ -96,7 +96,7 @@ plt.title()                     #设置标题
 plt.show()                      #显示创建的绘图对象
 ```
 任务三：<br/>
-&emsp;&emsp;绘制 \\(y = 2 \times sinx + cosx\\) 的曲线，横坐标范围为[$-3 \times \pi$ , $3 \times \pi$]，曲线为红色。实现代码如下：<br/>
+&emsp;&emsp;绘制 $y = 2 \times sinx + cosx$ 的曲线，横坐标范围为[$-3 \times \pi$ , $3 \times \pi$]，曲线为红色。实现代码如下：<br/>
 
 ```
 import numpy as np
@@ -120,5 +120,3 @@ plt.show()
 - Numpy 数组是 静态类型 并且 齐次。 元素类型在数组创建的时候就已经确定了。
 - Numpy 数组节约内存。
 - 由于是静态类型，对其数学操作函数（如矩阵乘法，矩阵加法）的实现可以使用 C 或者 Fortran 完成。
-
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
