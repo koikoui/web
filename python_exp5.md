@@ -1,5 +1,7 @@
 ## 实验五 科学计算与可视化
 
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
 #### 实验目的
 1. 了解*Numpy*多维数组的概念，理解多维数组的广播概念。
 2. 掌握*Numpy*多维数组的使用方法（初始化、索引、切片、简单的数组与矩阵运算）。
@@ -121,4 +123,3 @@ plt.show()
 - Numpy 数组是 静态类型 并且 齐次。 元素类型在数组创建的时候就已经确定了。
 - Numpy 数组节约内存。
 - 由于是静态类型，对其数学操作函数（如矩阵乘法，矩阵加法）的实现可以使用 C 或者 Fortran 完成。
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
