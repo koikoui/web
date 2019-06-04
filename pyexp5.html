@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>实验五 科学计算与可视化</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <h2 id="%E5%AE%9E%E9%AA%8C%E4%BA%94-%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97%E4%B8%8E%E5%8F%AF%E8%A7%86%E5%8C%96">实验五 科学计算与可视化</h2>
+<h4 id="%E5%AE%9E%E9%AA%8C%E7%9B%AE%E7%9A%84">实验目的</h4>
+<ol>
+<li>了解<em>Numpy</em>多维数组的概念，理解多维数组的广播概念。</li>
+<li>掌握<em>Numpy</em>多维数组的使用方法（初始化、索引、切片、简单的数组与矩阵运算）。</li>
+<li>了解<em>Matplotlib</em>库，能使用<em>Matplotlib</em>库绘制二维图形。</li>
+</ol>
+<h4 id="%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9">实验内容</h4>
+<p>任务一：<br/>
+  运行实验指导中的cell中的语句，理解<em>Numpy</em>数组的创建方法，属性与常用操作。必要时修改语句，观察不同参数时语句的运行结果。<u>总结<em>Numpy</em>数组初始化、索引与切片、广播、数组与矩阵的相关操作。</u><br/></p>
+<h6 id="%E5%88%9D%E5%A7%8B%E5%8C%96">初始化</h6>
+<pre><code><div>np.array([x,y,z],dtype=int) #从Python列表和元组创造数组
+np.arange(x,y,i)            #创建一个由x到y，以i为步长的数组
+np.linspace(x,y,n)          #创建一个由x到y，等分成n个元素的数组
+np.indices((m,n))           #创建一个m行n列的矩阵
+np.random.rand(m,n)         #创建一个m行n列的随机数组
+np.ones((m,n),dtype)        #创建一个m行n列全1的数组，dtype是数据类型
+np.empty((m,n),dtype)       #创建一个m行n列全0的数组，dtype是数据类型
+</div></code></pre>
+<h6 id="%E7%B4%A2%E5%BC%95%E5%88%87%E7%89%87">索引、切片</h6>
+<pre><code><div>x[i]        #索引第i个元素
+x[-i]       #从后向前索引第i个元素
+x[n:m]      #默认步长为1，从前往后索引，不包含m
+x[-m:-n]    #默认步长为1，从后往前索引，结束位置为n
+x[n:m:i]    #指定i步长的由n到m的索引
+</div></code></pre>
+<h6 id="%E5%B9%BF%E6%92%AD%E8%A7%84%E5%88%99">广播规则</h6>
+<blockquote>
+<ul>
+<li>如果两个数组的维数不同，则维数较少的数组的形状，将在其左侧填充。</li>
+<li>如果两个数组的形状在任何维度上都不匹配，则该维度中形状等于1的数组将被拉伸来匹配其他形状。</li>
+<li>如果在任何维度中，大小不一致且都不等于1，则会引发错误。</li>
+</ul>
+<blockquote>
+<p>引用自简书文章：<a href="https://www.jianshu.com/p/e4ccb074ffdb">数据科学 IPython 笔记本 9.7 数组上的计算：广播</a></p>
+</blockquote>
+</blockquote>
+<ol>
+<li>让所有输入数组都向其中shape最长的数组看齐，shape中不足的部分都通过在前面加1补齐；</li>
+<li>输出数组的shape是输入数组shape的各个轴上的最大值；</li>
+<li>如果输入数组的某个轴和输出数组的对应轴的长度相同或者其长度为1时，这个数组能够用来计算，否则出错；</li>
+<li>当输入数组的某个轴的长度为1时，沿着此轴运算时都能用此轴上的第一组值。</li>
+</ol>
+<h6 id="ndarray%E7%B1%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A77%E4%B8%AA%E5%92%8C%E5%BD%A2%E6%80%81%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%955%E4%B8%AA">ndarray类的常用属性（7个）和形态操作方法（5个）</h6>
+<pre><code><div>ndarray.ndim        #数组轴的个数，也被称作秩
+ndarray.shape       #数组在每个维度上大小的整数元组
+ndarray.size        #数组元素的总个数
+ndarray.dtype       #数组元素的数据类型，dtype类型可以用于创建数组
+ndarray.itemsize    #数组中每个元素的字节大小
+ndarray.data        #包含实际数组元素的缓冲区地址
+ndarray.flat        #数组元素的迭代器
+
+ndarray.reshape(n,m)        #不改变数组ndarray，返回一个维度为(n,m)的数组
+ndarray.resize(new_shape)   #与reshape()作用相同，直接修改数组ndarray
+ndarray.swapaxes(ax1,ax2)   #将数组n个维度中任意两个维度进行调换
+ndarray.flatten()           #对数组进行降维，返回一个折叠后的一维数组
+ndarray.ravel()             #作用同np.flatten()，但是返回数组的一个视图
+</div></code></pre>
+<h6 id="%E7%9F%A9%E9%98%B5%E7%9A%84%E5%88%9B%E5%BB%BA%E4%B8%8E%E8%BF%90%E7%AE%97">矩阵的创建与运算</h6>
+<pre><code><div>b = mat(a)                  #若a本身是矩阵，则不会创建新矩阵，而是建立引用
+b = matrix(a)               #创建新的矩阵b
+matrix(eye(2,dtype=int))    #生成一个二阶单位矩阵
+matrix(diag([1,2,3]))       #生成一个对角线为1、2、3的对角矩阵
+                            #l类似ndarray的有ones、zeros等
+
+matrix(a)*matrix(b) #矩阵相乘
+multiply(a,b)       #矩阵点乘
+a*2                 #同上一行点乘
+a.I                 #矩阵a的逆矩阵
+a.T                 #矩阵a的转置
+
+a.sum(axis=0)       #计算每一列的和，得到（1*列数）矩阵
+a.sum(axis=1)       #计算每一行的和，得到（行数*1）矩阵
+sum(a[i,:])         #计算第i+1行的和，得到一个数
+sum(a[:,j])         #计算第j+1列的和，得到一个数
+                    #类似的还有max（得到最大值）、argmax（得到最大值的索引）
+
+a[i:,j:]            #分割出第i+1行以后的行和第j+1列以后的列的所有元素
+c=vstack((a,b))     #按列合并，即增加行数
+d=hstack((a,b))     #按行合并，即行数不变，扩展列数
+</div></code></pre>
+<p>任务二：<br/>
+  运行以上cell中的语句，掌握利用<em>matplotlib</em>绘制二维图形。<u>总结<em>matplotlib</em>绘制二维图形的基本步骤与注意要点。</u><br/></p>
+<h6 id="matplotlib%E7%9A%84%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C">matplotlib的简单操作</h6>
+<pre><code><div>plt.plot(x,y,label,color,width) #根据x、y数组绘制直、曲线
+plt.figure(figsize=None,facecolor=None(,dpi=n)) 
+                                #创建一个全局绘图区域
+plt.subplot(nrows,ncols,plot_number)    
+                                #在全局绘图区域中创建一个子绘图区域
+plt.xlim(xmin,xmax)             #设置当前x轴取值范围
+plt.ylim(ymin,ymax)
+plt.xticks(array,'a','b','c')   #设置当前x轴刻度位置的标签和值
+plt.yticks(array,'a','b','c')
+plt.xlabel(s)                   #设置当前x轴的标签
+plt.ylabel(s)
+plt.title()                     #设置标题
+plt.show()                      #显示创建的绘图对象
+</div></code></pre>
+<p>任务三：<br/>
+  绘制 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mn>2</mn><mo>×</mo><mi>s</mi><mi>i</mi><mi>n</mi><mi>x</mi><mo>+</mo><mi>c</mi><mi>o</mi><mi>s</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">y = 2 \times sinx + cosx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">x</span></span></span></span> 的曲线，横坐标范围为[<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo><mn>3</mn><mo>×</mo><mi>π</mi></mrow><annotation encoding="application/x-tex">-3 \times \pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span> , <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mo>×</mo><mi>π</mi></mrow><annotation encoding="application/x-tex">3 \times \pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span>]，曲线为红色。实现代码如下：<br/></p>
+<pre><code><div>import numpy as np
+import matplotlib.pyplot as plt
+
+from math import pi
+
+x = np.linspace(-3*pi,3*pi,200)
+y = 2*np.sin(x)+np.cos(x)
+plt.plot(x,y,color='red')
+plt.show()
+</div></code></pre>
+<h6 id="%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C">运行结果</h6>
+<p>  
+<img src="file:///d:\yongn\Desktop\doc\md\img\img_pyexp5_3.jpg" width="300"></p>
+<h4 id="%E6%80%9D%E8%80%83%E9%A2%98">【思考题】</h4>
+<p>  <em>numpy.ndarray</em>看上去与<em>list</em>差不多。为什么不直接用<em>list</em>？<br/></p>
+<ul>
+<li>Python 的 list 是动态类型，可以包含不同类型的元素，所以没有支持诸如点乘等数学函数，因为要为 list 实现这些操作会牺牲性能。</li>
+<li>Numpy 数组是 静态类型 并且 齐次。 元素类型在数组创建的时候就已经确定了。</li>
+<li>Numpy 数组节约内存。</li>
+<li>由于是静态类型，对其数学操作函数（如矩阵乘法，矩阵加法）的实现可以使用 C 或者 Fortran 完成。</li>
+</ul>
+
+    </body>
+    </html>
